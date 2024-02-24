@@ -1,3 +1,5 @@
+import CustomErrors from "../errors/custom-errors.js";
+
 const getAllContacts = (req, res, next) => {
   try {
     res.json({ msg: "get all contacts" });
@@ -28,6 +30,7 @@ const deleteContact = (req, res, next) => {
 };
 const getContact = (req, res, next) => {
   try {
+    throw new CustomErrors("merra error", 404);
     res.json({ msg: "get contact" });
   } catch (error) {
     next(error);
