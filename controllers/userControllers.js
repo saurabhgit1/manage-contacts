@@ -18,16 +18,22 @@ const registerUser = async (req, res, next) => {
     }
     const user = await userModel.create({ username, email, password });
     if (user) {
-      res.status(StatusCodes.OK).json(user);
+      res.status(StatusCodes.CREATED).json({ id: user.id, email: user.email });
     }
   } catch (error) {
     next(error);
   }
 };
 
-const loginUser = (req, res, next) => {
+const loginUser = async (req, res, next) => {
   try {
-    console.log("login");
+    const { email, password } = req.body;
+    const user = await userModel.findOne({ email });
+    const pwdMatched = user.matchPassword(password);
+    if (pwdMatched) {
+      const token = user.createJWT();
+      res.status(StatusCodes.OK).json({ email: email, token });
+    }
   } catch (error) {
     next(error);
   }
