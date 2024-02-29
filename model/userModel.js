@@ -21,10 +21,9 @@ const userSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-
 userSchema.pre("save", async function () {
   const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);// check by removing await
+  this.password = await bcrypt.hash(this.password, salt); // check by removing await
 });
 
 userSchema.methods.matchPassword = async function (pwdByUser) {
@@ -42,4 +41,3 @@ userSchema.methods.createJWT = function () {
   return token;
 };
 export default mongoose.model("User", userSchema);
-

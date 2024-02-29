@@ -40,7 +40,7 @@ const loginUser = async (req, res, next) => {
 };
 const currentUser = (req, res, next) => {
   try {
-    console.log("current");
+    res.status(StatusCodes.OK).json({ user: req.user });
   } catch (error) {
     next(error);
   }

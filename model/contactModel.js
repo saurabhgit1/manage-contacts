@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const contactSchema = new mongoose.Schema(
   {
+    createdBy: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+      required: [true, "Please provide created by"],
+    },
     name: {
       type: String,
       required: [true, "please provide name"],
